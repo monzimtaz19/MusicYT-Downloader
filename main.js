@@ -152,6 +152,17 @@ async function downloadThumbnail(url, outputPath) {
   });
 }
 
+// Convert image to JPG
+async function convertImageToJpg(inputPath, outputPath) {
+  return new Promise((resolve, reject) => {
+    ffmpeg(inputPath)
+      .toFormat('mjpeg')
+      .on('end', () => resolve(outputPath))
+      .on('error', reject)
+      .save(outputPath);
+  });
+}
+
 async function getTitleFromMetadata(filePath) {
   return new Promise((resolve) => {
     try {
@@ -326,6 +337,17 @@ async function handleSingleDownload(event, url, format) {
           .save(filePath);
       });
 
+      if (fs.existsSync(thumbnailPath)) {
+        try {
+          const rawThumb = thumbnailPath + '_raw';
+          fs.renameSync(thumbnailPath, rawThumb);
+          await convertImageToJpg(rawThumb, thumbnailPath);
+          fs.unlinkSync(rawThumb);
+        } catch (e) {
+          log(`Thumbnail conversion failed: ${e.message}`);
+        }
+      }
+
       event.reply('download-status', 'Adding metadata and cover art...');
 
       const tags = {
@@ -494,6 +516,17 @@ async function handlePlaylistDownload(event, url, format) {
                 .on('error', reject)
                 .save(outputPath);
             });
+
+            if (fs.existsSync(thumbnailPath)) {
+              try {
+                const rawThumb = thumbnailPath + '_raw';
+                fs.renameSync(thumbnailPath, rawThumb);
+                await convertImageToJpg(rawThumb, thumbnailPath);
+                fs.unlinkSync(rawThumb);
+              } catch (e) {
+                log(`Thumbnail conversion failed: ${e.message}`);
+              }
+            }
 
             const tags = {
               title: video.title,

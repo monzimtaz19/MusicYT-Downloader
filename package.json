@@ -1,6 +1,6 @@
 {
   "name": "musicyt-downloader",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Desktop app to download YouTube videos/audio with metadata and cover art",
   "main": "main.js",
   "scripts": {
