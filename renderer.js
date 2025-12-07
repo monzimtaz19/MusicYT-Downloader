@@ -30,7 +30,18 @@ downloadBtn.addEventListener('click', () => {
   }
 
   const isPlaylist = playlistCheck.checked;
-  startDownload(url, format, isPlaylist);
+
+  // Clean URL if not checking playlist (remove index, keep list)
+  let finalUrl = url;
+  if (!isPlaylist) {
+    try {
+      const urlObj = new URL(url);
+      urlObj.searchParams.delete('index');
+      finalUrl = urlObj.toString();
+    } catch (e) { }
+  }
+
+  startDownload(finalUrl, format, isPlaylist);
 });
 
 function startDownload(url, format, isPlaylist) {

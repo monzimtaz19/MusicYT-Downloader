@@ -239,7 +239,8 @@ async function handleSingleDownload(event, url, format) {
       dumpSingleJson: true,
       noWarnings: true,
       noCheckCertificate: true,
-      preferFreeFormats: true
+      preferFreeFormats: true,
+      noPlaylist: true
     });
 
     const title = info.title.replace(/[^\w\s-]/gi, '').trim();
@@ -272,7 +273,8 @@ async function handleSingleDownload(event, url, format) {
         output: simpleOutputPath,
         format: 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best',
         mergeOutputFormat: 'mp4',
-        ffmpegLocation: ffmpegPath
+        ffmpegLocation: ffmpegPath,
+        noPlaylist: true
       });
 
       ytdlpProcess.stdout.on('data', (data) => {
@@ -297,7 +299,8 @@ async function handleSingleDownload(event, url, format) {
         format: 'bestaudio[ext=m4a]/bestaudio',
         extractAudio: true,
         audioFormat: 'm4a',
-        ffmpegLocation: ffmpegPath
+        ffmpegLocation: ffmpegPath,
+        noPlaylist: true
       });
 
       event.reply('download-status', 'Downloading cover art...');
