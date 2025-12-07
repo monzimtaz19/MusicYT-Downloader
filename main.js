@@ -166,40 +166,67 @@ async function downloadThumbnail(url, outputPath) {
 }
 
 // Rename files based on ID3 tags
+// Helper to get title from MP4/media via ffmpeg
+async function getTitleFromMetadata(filePath) {
+  return new Promise((resolve) => {
+    try {
+      const child = spawn(ffmpegPath, ['-i', filePath]);
+      let stderr = '';
+      child.stderr.on('data', d => stderr += d.toString());
+      child.on('close', () => {
+        // Match "title : Some Value" in ffmpeg stderr
+        const match = stderr.match(/^\s*title\s*:\s*(.+)$/m);
+        if (match && match[1]) resolve(match[1].trim());
+        else resolve(null);
+      });
+      child.on('error', () => resolve(null));
+    } catch (e) { resolve(null); }
+  });
+}
+
+// Rename files based on ID3 tags (MP3) or Metadata (MP4)
 async function renameFilesFromTags(videoDir) {
   try {
     const files = fs.readdirSync(videoDir);
     log(`[Rename] Scanning ${files.length} files in ${videoDir}`);
 
     for (const file of files) {
-      if (path.extname(file).toLowerCase() === '.mp3') {
-        const filePath = path.join(videoDir, file);
+      const ext = path.extname(file).toLowerCase();
+      if (ext !== '.mp3' && ext !== '.mp4') continue;
+
+      const filePath = path.join(videoDir, file);
+      let title = null;
+
+      if (ext === '.mp3') {
         const tags = NodeID3.read(filePath);
+        if (tags && tags.title) title = tags.title;
+      } else if (ext === '.mp4') {
+        title = await getTitleFromMetadata(filePath);
+      }
 
-        if (tags && tags.title) {
-          const safeTitle = tags.title.replace(/[^\w\s-]/gi, '').trim();
-          const newFileName = `${safeTitle}.mp3`;
-          const newFilePath = path.join(videoDir, newFileName);
+      if (title) {
+        const safeTitle = title.replace(/[^\w\s-]/gi, '').trim();
+        const newFileName = `${safeTitle}${ext}`;
+        const newFilePath = path.join(videoDir, newFileName);
 
-          if (filePath !== newFilePath) {
-            try {
-              if (fs.existsSync(newFilePath)) {
-                // Handle duplicates
-                let counter = 1;
-                let tempPath = newFilePath;
-                while (fs.existsSync(tempPath)) {
-                  tempPath = path.join(videoDir, `${safeTitle} (${counter}).mp3`);
-                  counter++;
-                }
-                fs.renameSync(filePath, tempPath);
-                log(`[Rename] Renamed (duplicate): ${file} -> ${path.basename(tempPath)}`);
-              } else {
-                fs.renameSync(filePath, newFilePath);
-                log(`[Rename] Renamed: ${file} -> ${newFileName}`);
+        if (filePath !== newFilePath) {
+          try {
+            if (fs.existsSync(newFilePath)) {
+              // Handle duplicates
+              let counter = 1;
+              let tempPath = newFilePath;
+              while (fs.existsSync(tempPath)) {
+                tempPath = path.join(videoDir, `${safeTitle} (${counter})${ext}`);
+                counter++;
               }
-            } catch (err) {
-              log(`[Rename] Error renaming ${file}: ${err.message}`);
+              fs.renameSync(filePath, tempPath);
+              log(`[Rename] Renamed (duplicate): ${file} -> ${path.basename(tempPath)}`);
+            } else {
+              fs.renameSync(filePath, newFilePath);
+              log(`[Rename] Renamed: ${file} -> ${newFileName}`);
             }
+          } catch (err) {
+            log(`[Rename] Error renaming ${file}: ${err.message}`);
           }
         }
       }
